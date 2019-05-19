@@ -20,6 +20,10 @@ func (a *App) Initialize() {
 func (a *App) setRouters() {
 	a.Get("/servers", a.GetAllServer)
 	a.Post("/servers", a.CreateServer)
+	a.Get("/servers/{uuid}", a.GetServerByUUID)
+	a.Get("/servers/{uuid}/status", a.GetServerStatusByUUID)
+	a.Delete("/servers/{uuid}", a.DeleteServerByUUID)
+	a.Get("/check/{name}", a.CheckServer)
 }
 
 func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
@@ -42,8 +46,24 @@ func (a *App) GetAllServer(w http.ResponseWriter, r *http.Request) {
 	handler.GetAllServer(w, r)
 }
 
+func (a *App) GetServerByUUID(w http.ResponseWriter, r *http.Request) {
+	handler.GetServerByUUID(w, r)
+}
+
+func (a *App) GetServerStatusByUUID(w http.ResponseWriter, r *http.Request) {
+	handler.GetServerStatusByUUID(w, r)
+}
+
 func (a *App) CreateServer(w http.ResponseWriter, r *http.Request) {
 	handler.CreateServer(w, r)
+}
+
+func (a *App) DeleteServerByUUID(w http.ResponseWriter, r *http.Request) {
+	handler.DeleteServerByUUID(w, r)
+}
+
+func (a *App) CheckServer(w http.ResponseWriter, r *http.Request) {
+	handler.CheckServer(w, r)
 }
 
 func (a *App) Run(host string) {
