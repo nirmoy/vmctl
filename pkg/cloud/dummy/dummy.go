@@ -9,6 +9,10 @@ type Server struct {
 	Name string `json:"name"`
 }
 
+type ServerID struct {
+	ID string `json:"id"`
+}
+
 var AllServers = []Server{}
 
 func CreateServer(name string) (Server, error) {
@@ -23,4 +27,40 @@ func CreateServer(name string) (Server, error) {
 
 func GetAllServers() []Server {
 	return AllServers
+}
+
+func GetServerByID(uuid string) Server {
+	for _, server := range AllServers {
+		if server.ID == uuid {
+			return server
+		}
+	}
+	return Server{}
+}
+
+func GetServerByName(name string) Server {
+	for _, server := range AllServers {
+		if server.Name == name {
+			return server
+		}
+	}
+	return Server{}
+}
+
+func IsExistServerByName(name string) bool {
+	server := GetServerByName(name)
+	if (len(server.ID) + len(server.Name)) == 0 {
+		return false
+	}
+
+	return true
+}
+
+func IsExistServerByID(uuid string) bool {
+	server := GetServerByID(uuid)
+	if (len(server.ID) + len(server.Name)) == 0 {
+		return false
+	}
+
+	return true
 }
